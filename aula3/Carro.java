@@ -159,7 +159,7 @@ public class Carro
     {
         if ( this.ligado )
         {
-            if ( this.velocidade == this.velocidadeMaxima )
+            if ( this.velocidade != this.velocidadeMaxima )
             {
                 if ( value > 0 )
                 {
@@ -208,7 +208,7 @@ public class Carro
     {
         if ( this.ligado )
         {
-            if ( this.velocidade == 0 )
+            if ( this.velocidade != 0 )
             {
                 if ( value > 0 )
                 {
