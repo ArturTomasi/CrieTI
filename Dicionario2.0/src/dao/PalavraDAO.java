@@ -24,7 +24,12 @@ public class PalavraDAO
    
    public void delete( Palavra p ) throws Exception
    {
-        ConexaoBD.getInstance().executeUpdate( "delete from palavras where codigo = " + p.getCodigo() );
+        this.delete( p.getCodigo() );
+   }
+   
+   public void delete( int codigo ) throws Exception
+   {
+        ConexaoBD.getInstance().executeUpdate( "delete from palavras where codigo = " + codigo );
    }
    
    public ArrayList<Palavra> get() throws Exception

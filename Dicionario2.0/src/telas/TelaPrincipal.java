@@ -6,6 +6,7 @@ package telas;
 
 import controlas.Dicionario;
 import entidade.Palavra;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
@@ -32,7 +33,7 @@ public class TelaPrincipal
         
         setTitle( "Dicionário" );
     }
-
+    
     private void carregaInformacoes()
     {
         this.carregaInformacoes( null );
@@ -82,7 +83,7 @@ public class TelaPrincipal
                     switch ( columnIndex )
                     {
                         case 0:
-                            return p.getCodigo();
+                            return p.getCodigo();   
                         case 1:
                             return p.getPalavra();
                         case 2:
@@ -182,27 +183,25 @@ public class TelaPrincipal
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtCode, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(26, 26, 26)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(txtPalavra, javax.swing.GroupLayout.PREFERRED_SIZE, 771, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel3))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnSair)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSalvar)))
-                .addContainerGap())
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSalvar))
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtCode, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGap(26, 26, 26)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(txtPalavra, javax.swing.GroupLayout.PREFERRED_SIZE, 771, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel3)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,6 +270,13 @@ public class TelaPrincipal
                 tblPalavrasMouseClicked(evt);
             }
         });
+        tblPalavras.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
+                tblPalavrasKeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblPalavras);
         tblPalavras.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tblPalavras.getColumnModel().getColumnCount() > 0)
@@ -297,11 +303,11 @@ public class TelaPrincipal
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addComponent(txtBusca)))
+                        .addComponent(txtBusca, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -332,6 +338,36 @@ public class TelaPrincipal
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtBuscaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_txtBuscaActionPerformed
+    {//GEN-HEADEREND:event_txtBuscaActionPerformed
+        carregaInformacoes( txtBusca.getText() );
+    }//GEN-LAST:event_txtBuscaActionPerformed
+
+    private void tblPalavrasMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_tblPalavrasMouseClicked
+    {//GEN-HEADEREND:event_tblPalavrasMouseClicked
+        if ( evt.getClickCount() == 2 )
+        {
+            int row = tblPalavras.getSelectedRow();
+
+            txtCode.setText( String.valueOf( tblPalavras.getModel().getValueAt( row, 0 ) ) );
+            txtPalavra.setText( String.valueOf( tblPalavras.getModel().getValueAt( row, 1 ) ) );
+            txtSignificado.setText( String.valueOf( tblPalavras.getModel().getValueAt( row, 2 ) ) );
+            jTabbedPane1.setSelectedIndex( 0 );
+        }
+    }//GEN-LAST:event_tblPalavrasMouseClicked
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSairActionPerformed
+    {//GEN-HEADEREND:event_btnSairActionPerformed
+        ConexaoBD.getInstance().shutDown();
+
+        System.exit( 0 );
+    }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed
+    {//GEN-HEADEREND:event_btnCancelarActionPerformed
+        limpaCampos();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSalvarActionPerformed
     {//GEN-HEADEREND:event_btnSalvarActionPerformed
         if ( dicionario.validate( txtPalavra.getText(), txtCode.getText() ) )
@@ -354,7 +390,6 @@ public class TelaPrincipal
                 JOptionPane.showMessageDialog( null, "Palavra atualizada!" );
             }
 
-
             limpaCampos();
 
             carregaInformacoes( txtBusca.getText() );
@@ -366,35 +401,21 @@ public class TelaPrincipal
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed
-    {//GEN-HEADEREND:event_btnCancelarActionPerformed
-        limpaCampos();
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void btnSairActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSairActionPerformed
-    {//GEN-HEADEREND:event_btnSairActionPerformed
-        ConexaoBD.getInstance().shutDown();
-
-        System.exit( 0 );
-    }//GEN-LAST:event_btnSairActionPerformed
-
-    private void txtBuscaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_txtBuscaActionPerformed
-    {//GEN-HEADEREND:event_txtBuscaActionPerformed
-        carregaInformacoes( txtBusca.getText() );
-    }//GEN-LAST:event_txtBuscaActionPerformed
-
-    private void tblPalavrasMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_tblPalavrasMouseClicked
-    {//GEN-HEADEREND:event_tblPalavrasMouseClicked
-        if ( evt.getClickCount() == 2 )
+    private void tblPalavrasKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_tblPalavrasKeyPressed
+    {//GEN-HEADEREND:event_tblPalavrasKeyPressed
+        if ( tblPalavras.getSelectedRow() != -1 )
         {
-            int row = tblPalavras.getSelectedRow();
-
-            txtCode.setText( String.valueOf( tblPalavras.getModel().getValueAt( row, 0 ) ) );
-            txtPalavra.setText( String.valueOf( tblPalavras.getModel().getValueAt( row, 1 ) ) );
-            txtSignificado.setText( String.valueOf( tblPalavras.getModel().getValueAt( row, 2 ) ) );
-            jTabbedPane1.setSelectedIndex( 0 );
+            if ( evt.getKeyCode() == KeyEvent.VK_DELETE )
+            {
+                if ( JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog( null, "Deseja excluir a palavra selecionada?" ) )
+                {
+                    dicionario.deletePalavra( (Integer)tblPalavras.getValueAt( tblPalavras.getSelectedRow(), 0 ) );
+                    
+                    carregaInformacoes();
+                }
+            }
         }
-    }//GEN-LAST:event_tblPalavrasMouseClicked
+    }//GEN-LAST:event_tblPalavrasKeyPressed
 
     /**
      * @param args the command line arguments

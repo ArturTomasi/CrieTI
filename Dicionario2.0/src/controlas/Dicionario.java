@@ -27,6 +27,19 @@ public class Dicionario
         }
     }
     
+    public void deletePalavra( int codigo )
+    {
+        try
+        {
+            this.dao.delete( codigo );
+        }
+        
+        catch ( Exception e )
+        {
+            JOptionPane.showMessageDialog( null, e );
+        }
+    }
+    
     public void updatePalavra( Palavra p )
     {
         try
